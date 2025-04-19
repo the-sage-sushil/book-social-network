@@ -3,7 +3,6 @@ package com.sushil.book.user;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+//@SuperBuilder
 @Entity
 public class Token {
 
@@ -20,7 +20,7 @@ public class Token {
     private Integer id;
     private String token;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private LocalDateTime expiresAt;
     private LocalDateTime validatedAt;
 
 

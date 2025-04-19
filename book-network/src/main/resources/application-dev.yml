@@ -1,9 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/book_social_network
+    url: jdbc:postgresql://localhost:5486/book_social_network
     username: username
     password: password
-    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
@@ -28,10 +27,21 @@ spring:
         connectiontimeout: 5000
         timeout: 3000
         writetimeout: 5000
-
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: "http://localhost:9090/realms/book-social-network"
 application:
   file:
     uploads:
       photos-output-path: ./uploads
+  security:
+    jwt:
+      secret-key: d789545651235852
+      expiration: 856000
+  mailing:
+    frontend:
+      activation-url: http://localhost:4200/activate-account
 server:
   port: 8088
