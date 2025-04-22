@@ -1,22 +1,31 @@
 package com.sushil.book.auth;
 
+import java.security.SecureRandom;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import com.sushil.book.email.EmailService;
 import com.sushil.book.email.EmailTemplateName;
 import com.sushil.book.role.RoleRepository;
+import com.sushil.book.security.JwtService;
 import com.sushil.book.user.Token;
 import com.sushil.book.user.TokenRepository;
 import com.sushil.book.user.User;
 import com.sushil.book.user.UserRepository;
+
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
+import jakarta.xml.bind.ValidationException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import java.security.SecureRandom;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +36,8 @@ public class AuthenticationService {
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
     private final EmailService emailService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
     @Value("${application.mailing.frontend.activation-url}")
     private String activationUrl;
@@ -57,8 +68,7 @@ public class AuthenticationService {
                 EmailTemplateName.ACTIVATE_ACCOUNT,
                 activationUrl,
                 newtoken,
-                "Account activation email"
-        );
+                "Account activation email");
 
     }
 
@@ -80,10 +90,42 @@ public class AuthenticationService {
         String characters = "0123456789";
         StringBuilder codeBuilder = new StringBuilder();
         SecureRandom secureRandom = new SecureRandom();
-        for(int i=0;i<length;i++){
+        for (int i = 0; i < length; i++) {
             int randomIndex = secureRandom.nextInt(characters.length());
             codeBuilder.append(characters.charAt(randomIndex));
         }
         return codeBuilder.toString();
+    }
+
+    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        var auth = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+
+        var claims = new HashMap<String, Object>();
+        User user = ((User) auth.getPrincipal());
+        claims.put("fullName", user.fullNam());
+
+        var jwt = jwtService.generateToken(claims, user);
+        return AuthenticationResponse.builder().token(jwt).build();
+    }
+
+    public void activateAccount(String token) throws MessagingException {
+
+        Token savedToken = tokenRepository.findByToken(token)
+            .orElseThrow(() -> new RuntimeException("Token Not Found!"));
+
+        if(LocalDateTime.now().isAfter(savedToken.getExpiresAt())){
+            sendValidationEmail(savedToken.getUser());
+            throw new RuntimeException("Token has Expired, A new token has been sent to the registred email address");
+        }
+
+        User user = userRepository.findById(savedToken.getUser().getId())
+            .orElseThrow(() -> new UsernameNotFoundException("User Not found!"));
+
+        user.setEnabled(true);
+        userRepository.save(user);
+        savedToken.setValidatedAt(LocalDateTime.now());
+        tokenRepository.save(savedToken);
+        
     }
 }
