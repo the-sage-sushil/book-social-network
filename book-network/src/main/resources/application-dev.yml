@@ -38,7 +38,7 @@ application:
       photos-output-path: ./uploads
   security:
     jwt:
-      secret-key: d789545651235852
+      secret-key: 9dff7eea736e59d28677757d6f64a7d5c44096380e606c0464e9b6a3b1a2f4123a259f7b9bc40a375a9a82daf59f32f2b023a33f830e20083519a88007862fdb
       expiration: 856000
   mailing:
     frontend:

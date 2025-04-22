@@ -4,7 +4,6 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,7 +23,6 @@ import com.sushil.book.user.UserRepository;
 
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
-import jakarta.xml.bind.ValidationException;
 import lombok.RequiredArgsConstructor;
 
 @Service
