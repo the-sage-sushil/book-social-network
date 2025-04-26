@@ -1,5 +1,7 @@
 package com.sushil.book.user;
 
+import com.sushil.book.book.Book;
+import com.sushil.book.history.BookTransactionHistory;
 import com.sushil.book.role.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,6 +32,7 @@ public class User implements UserDetails, Principal {
     @Id
     @GeneratedValue
     private Integer id;
+
     private String firstName;
     private String lastName;
 
@@ -50,6 +53,17 @@ public class User implements UserDetails, Principal {
     @Column(insertable = false)
     private LocalDate updatedDate;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Role> roles;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Book> books;
+
+
+    @OneToMany(mappedBy = "user")
+    private List<BookTransactionHistory> histories;
+
+
     @Override
     public String getName() {
         return email;
@@ -63,8 +77,8 @@ public class User implements UserDetails, Principal {
                 .collect(Collectors.toList());
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    public List<Role> roles;
+
+
 
     @Override
     public String getPassword() {
