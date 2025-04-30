@@ -29,7 +29,7 @@ public class BeansConfig {
     }
 
     @Bean
-    public AuditorAware<String> auditorAware(){
+    public AuditorAware<String> getCurrentAuditor(){
         return new ApplicationAuditAware();
     }
 

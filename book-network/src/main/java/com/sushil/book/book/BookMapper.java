@@ -1,5 +1,6 @@
 package com.sushil.book.book;
 
+import com.sushil.book.file.FileUtils;
 import com.sushil.book.history.BookTransactionHistory;
 import org.springframework.stereotype.Service;
 
@@ -31,8 +32,7 @@ public class BookMapper {
                 .archived(book.isArchived())
                 .shareable(book.isShareable())
                 .owner(book.getOwner().fullNam())
-                // todo do this later
-                // cover
+                .cover(FileUtils.readFileFromLocation(book.getBookCover()))
                 .build();
     }
 

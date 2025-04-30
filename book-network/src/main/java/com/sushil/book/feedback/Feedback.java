@@ -1,7 +1,10 @@
 package com.sushil.book.feedback;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import com.sushil.book.book.Book;
 import com.sushil.book.common.BaseEntity;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.JoinColumn;
@@ -11,7 +14,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Getter
 @Setter
@@ -23,6 +25,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Feedback extends BaseEntity   {
 
     private Double note;
+    
     private String comment;
 
     @ManyToOne
