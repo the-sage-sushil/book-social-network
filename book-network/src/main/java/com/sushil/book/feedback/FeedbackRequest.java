@@ -27,7 +27,7 @@ public record FeedbackRequest(
     @NotNull(message = "205")
     @NotEmpty(message = "205")
     @NotBlank(message = "205")
-    Integer id
+    Integer bookId
 ) {
  
 }
