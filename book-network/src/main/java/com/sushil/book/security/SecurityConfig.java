@@ -32,10 +32,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(
                                 "/auth/**",
-                                        "/v2/api-doc",
-                                        "/v3/api-doc",
-                                        "v3/api-docs/**",
-                                        "/swagger-resources",
+                                        "/v1/api-doc/",
+                                        "/v3/api-doc/",
+                                        "/v3/api-docs/**",
+                                        "/swagger-resources/",
                                         "/swagger-resources/**",
                                         "/configuration/ui",
                                         "/configuration/security",
