@@ -57,4 +57,8 @@ public class Book extends BaseEntity {
         return roundedRate;
     }
 
+
+    @Version
+    private Long version;
+
 }

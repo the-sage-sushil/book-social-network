@@ -1,3 +1,21 @@
 {
-    "java.compile.nullAnalysis.mode": "automatic"
+    "java.compile.nullAnalysis.mode": "automatic",
+    "github.copilot.enable": {
+        "*": false,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    },
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5486,
+            "askForPassword": true,
+            "driver": "PostgreSQL",
+            "name": "mydb",
+            "database": "book_social_network",
+            "username": "username"
+        }
+    ]
 }

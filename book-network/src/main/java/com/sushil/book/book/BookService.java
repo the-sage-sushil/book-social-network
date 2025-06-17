@@ -19,10 +19,12 @@ import com.sushil.book.history.BookTransactionHistoryRepository;
 import com.sushil.book.user.User;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class BookService extends Book {
 
     private final BookMapper bookMapper;

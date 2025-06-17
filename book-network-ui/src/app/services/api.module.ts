@@ -8,7 +8,7 @@ import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
 import { FeedbackService } from './services/feedback.service';
 import { BookService } from './services/book.service';
-import { AuthenticationControllerService } from './services/authentication-controller.service';
+import { AuthenticationService } from './services/authentication.service';
 
 /**
  * Module that provides all services and configuration.
@@ -20,7 +20,7 @@ import { AuthenticationControllerService } from './services/authentication-contr
   providers: [
     FeedbackService,
     BookService,
-    AuthenticationControllerService,
+    AuthenticationService,
     ApiConfiguration
   ],
 })
