@@ -17,5 +17,6 @@
             "database": "book_social_network",
             "username": "username"
         }
-    ]
+    ],
+    "java.debug.settings.onBuildFailureProceed": true
 }

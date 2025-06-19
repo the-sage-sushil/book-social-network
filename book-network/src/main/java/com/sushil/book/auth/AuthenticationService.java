@@ -45,12 +45,12 @@ public class AuthenticationService {
                 .orElseThrow(() -> new IllegalArgumentException("ROLE USER was not initialized"));
 
         var user = User.builder()
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
+                .firstname(request.getFirstName())
+                .lastname(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .accountLocked(false)
-                .isEnabled(false)
+                .enabled(false)
                 .roles(List.of(userRole))
                 .build();
         userRepository.save(user);
@@ -62,7 +62,7 @@ public class AuthenticationService {
         var newtoken = generateAndSaveActivationToken(user);
         emailService.sendEmail(
                 user.getEmail(),
-                user.fullNam(),
+                user.fullName(),
                 EmailTemplateName.ACTIVATE_ACCOUNT,
                 activationUrl,
                 newtoken,
@@ -101,7 +101,7 @@ public class AuthenticationService {
 
         var claims = new HashMap<String, Object>();
         User user = ((User) auth.getPrincipal());
-        claims.put("fullName", user.fullNam());
+        claims.put("fullName", user.fullName());
 
         var jwt = jwtService.generateToken(claims, user);
         return AuthenticationResponse.builder().token(jwt).build();

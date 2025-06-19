@@ -25,8 +25,8 @@ import java.util.stream.Collectors;
 @Builder
 //@SuperBuilder
 @Entity
-@Table(name = "_user")
-@EntityListeners(AuditingEntityListener.class)
+// @Table(name = "users")
+// @EntityListeners(AuditingEntityListener.class)
 public class User implements UserDetails, Principal {
 
     @Id
@@ -38,47 +38,31 @@ public class User implements UserDetails, Principal {
 
     @Column(unique = true)
     private String email;
-
-    @Column
     private String password;
-    private LocalDate dateOfBirth;
-    private boolean isEnabled;
     private boolean accountLocked;
-
-    @CreatedDate
-    @Column(nullable = false,updatable = false)
-    private LocalDate createdDate;
-
-    @LastModifiedBy
-    @Column(insertable = false)
-    private LocalDate updatedDate;
-
+    private boolean enabled;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
-
     @OneToMany(mappedBy = "owner")
     private List<Book> books;
-
-
     @OneToMany(mappedBy = "user")
     private List<BookTransactionHistory> histories;
 
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdDate;
 
-    @Override
-    public String getName() {
-        return email;
-    }
+    @LastModifiedDate
+    @Column(insertable = false)
+    private LocalDateTime lastModifiedDate;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles
-                .stream().
-                map(r -> new SimpleGrantedAuthority(r.getName()))
+                .stream()
+                .map(r -> new SimpleGrantedAuthority(r.getName()))
                 .collect(Collectors.toList());
     }
-
-
-
 
     @Override
     public String getPassword() {
@@ -107,10 +91,19 @@ public class User implements UserDetails, Principal {
 
     @Override
     public boolean isEnabled() {
-        return isEnabled;
+        return enabled;
     }
 
-    public String fullNam() {
-        return firstName +" "+lastName;
+    public String fullName() {
+        return getFirstname() + " " + getLastname();
+    }
+
+    @Override
+    public String getName() {
+        return email;
+    }
+
+    public String getFullName() {
+        return firstname + " " + lastname;
     }
 }

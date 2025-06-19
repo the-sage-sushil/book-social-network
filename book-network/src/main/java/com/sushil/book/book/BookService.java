@@ -33,10 +33,10 @@ public class BookService extends Book {
     private final FileManagementService fileManagementService;
 
     public Integer save(BookRequest request, Authentication connectedUser) {
+
         User user = ((User) connectedUser.getPrincipal());
         Book book = bookMapper.toBook(request);
         book.setOwner(user);
-
         return bookRepository.save(book).getId();
     }
 
@@ -120,9 +120,8 @@ public class BookService extends Book {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new EntityNotFoundException("No book found with the id::" + bookId));
 
-        User user = ((User) connectedUser.getPrincipal());
 
-        if (!Objects.equals(book.getOwner().getId(), user.getId())) {
+        if (!Objects.equals(book.getCreatedBy(), connectedUser.getPrincipal())) {
             new OperationNotPermittedException("You cannot update books shareable sttus");
         }
         book.setShareable(!book.isShareable()  );
@@ -134,9 +133,8 @@ public class BookService extends Book {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new EntityNotFoundException("No book found with the id::" + bookId));
 
-        User user = ((User) connectedUser.getPrincipal());
 
-        if (!Objects.equals(book.getOwner().getId(), user.getId())) {
+        if (!Objects.equals(book.getCreatedBy(), connectedUser.getPrincipal())) {
             new OperationNotPermittedException("You cannot update books Archived   sttus");
         }
         book.setArchived(!book.isArchived());

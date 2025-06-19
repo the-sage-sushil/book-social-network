@@ -20,7 +20,7 @@ import { register } from '../fn/authentication-controller/register';
 import { Register$Params } from '../fn/authentication-controller/register';
 
 @Injectable({ providedIn: 'root' })
-export class AuthenticationControllerService extends BaseService {
+export class AuthenticationService extends BaseService {
   constructor(config: ApiConfiguration, http: HttpClient) {
     super(config, http);
   }
