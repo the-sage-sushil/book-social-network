@@ -1,32 +1,45 @@
 package com.sushil.book.user;
 
-import com.sushil.book.book.Book;
-import com.sushil.book.history.BookTransactionHistory;
-import com.sushil.book.role.Role;
-import jakarta.persistence.*;
-import lombok.*;
+import java.security.Principal;
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.security.Principal;
-import java.time.LocalDate;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.sushil.book.book.Book;
+import com.sushil.book.history.BookTransactionHistory;
+import com.sushil.book.role.Role;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-//@SuperBuilder
 @Entity
-// @Table(name = "users")
-// @EntityListeners(AuditingEntityListener.class)
+@Table(name = "users")
+@EntityListeners(AuditingEntityListener.class)
 public class User implements UserDetails, Principal {
 
     @Id
@@ -95,7 +108,7 @@ public class User implements UserDetails, Principal {
     }
 
     public String fullName() {
-        return getFirstname() + " " + getLastname();
+        return getFirstName() + " " + getFirstName();
     }
 
     @Override
@@ -104,6 +117,6 @@ public class User implements UserDetails, Principal {
     }
 
     public String getFullName() {
-        return firstname + " " + lastname;
+        return firstName + " " + lastName;
     }
 }
