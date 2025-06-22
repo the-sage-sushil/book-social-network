@@ -5,9 +5,6 @@ import jakarta.validation.constraints.NotNull;
 
 public record BookRequest(
 
-
-        Integer id,
-
         @NotNull(message = "100")
         @NotEmpty(message = "100")
         String title,
@@ -19,6 +16,7 @@ public record BookRequest(
         String isbn,
         @NotNull(message = "103")
         @NotEmpty(message = "103")
+        
         String synopsis,
         boolean shareable
 
