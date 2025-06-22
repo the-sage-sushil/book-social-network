@@ -1,8 +1,9 @@
 package com.sushil.book.book;
 
+import org.springframework.stereotype.Service;
+
 import com.sushil.book.file.FileUtils;
 import com.sushil.book.history.BookTransactionHistory;
-import org.springframework.stereotype.Service;
 
 @Service
 public class BookMapper {
@@ -29,7 +30,7 @@ public class BookMapper {
                 .synopsis(book.getSynopsis())
                 .rate(book.getRate())
                 .archived(book.isArchived())
-                .shareable(book.isShareable())
+                .owner_id(book.getOwner().getId())
                 .cover(FileUtils.readFileFromLocation(book.getBookCover()))
                 .build();
     }

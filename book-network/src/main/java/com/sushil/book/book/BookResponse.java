@@ -1,6 +1,10 @@
 package com.sushil.book.book;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -13,7 +17,7 @@ public class BookResponse {
     private String authorName;
     private String isbn;
     private String synopsis;
-    private String owner;
+    private Integer owner_id;
 
     private byte[] cover;
 
