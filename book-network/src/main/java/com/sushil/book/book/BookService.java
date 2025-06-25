@@ -75,6 +75,8 @@ public class BookService extends Book {
                 books.getNumber(),
                 books.getSize(),
                 books.getTotalElements(),
+
+
                 books.getTotalPages(),
                 books.isFirst(),
                 books.isLast());
@@ -188,6 +190,7 @@ public class BookService extends Book {
 
     public Integer approveRetrunBorrowBook(Integer bookId, Authentication connectedUser) {
 
+        
         Book book = bookRepository.findById(bookId) .orElseThrow(()-> new EntityNotFoundException("Book not found by the given id::" + bookId));
         if(book.isArchived() && !book.isShareable()){
                 throw new OperationNotPermittedException("This book is not eligible for borrowing");

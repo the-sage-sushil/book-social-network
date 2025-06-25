@@ -30,7 +30,7 @@ public class BookMapper {
                 .synopsis(book.getSynopsis())
                 .rate(book.getRate())
                 .archived(book.isArchived())
-                .owner_id(book.getOwner().getId())
+                .owner(book.getOwner())
                 .cover(FileUtils.readFileFromLocation(book.getBookCover()))
                 .build();
     }

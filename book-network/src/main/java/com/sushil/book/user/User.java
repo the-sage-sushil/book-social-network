@@ -13,6 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sushil.book.book.Book;
 import com.sushil.book.history.BookTransactionHistory;
 import com.sushil.book.role.Role;
@@ -57,6 +58,7 @@ public class User implements UserDetails, Principal {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
     @OneToMany(mappedBy = "owner")
+    @JsonIgnore
     private List<Book> books;
     @OneToMany(mappedBy = "user")
     private List<BookTransactionHistory> histories;

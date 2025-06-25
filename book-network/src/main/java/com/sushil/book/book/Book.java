@@ -33,7 +33,7 @@ public class Book extends BaseEntity {
     private boolean shareable;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id")
+    @JoinColumn(name = "owner")
     private User owner;
 
     @OneToMany(mappedBy = "book")

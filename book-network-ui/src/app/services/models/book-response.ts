@@ -8,9 +8,18 @@ export interface BookResponse {
   cover?: string;
   id?: number;
   isbn?: string;
-  owner?: string;
+  owner?: User;
   rate?: number;
   shareable?: boolean;
   synopsis?: string;
   title?: string;
+}
+
+export interface User {
+  id: number;
+  account_locked: boolean;
+  email: string;
+  firstName: string;
+  lastname: string;
+  password: string;
 }

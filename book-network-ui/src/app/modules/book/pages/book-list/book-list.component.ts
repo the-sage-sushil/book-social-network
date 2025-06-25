@@ -10,7 +10,7 @@ import { BookService } from 'src/app/services/services';
 })
 export class BookListComponent implements OnInit {
   size: number | undefined;
-  page: number | undefined = 5;
+  page: number | undefined = 0;
 
   bookResponse: PageResponseBookResponse = {};
 
@@ -30,8 +30,8 @@ export class BookListComponent implements OnInit {
       size:this.size
     }).subscribe({
       next: (books:PageResponseBookResponse): void => {
-        debugger;
         this.bookResponse = books
+        console.log(this.bookResponse)
       } 
     })
   }
