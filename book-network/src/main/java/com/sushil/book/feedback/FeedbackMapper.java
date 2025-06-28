@@ -16,7 +16,7 @@ public class FeedbackMapper {
     
         return Feedback.builder()
         .note(feedback.rating())
-        .comment(feedback.commnet())
+        .comment(feedback.comment())
         .book(
             Book.builder()
             .id(feedback.bookId())
